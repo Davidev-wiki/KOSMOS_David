@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kosmos.mypage.dao.KosmosMypageDAO">
+		
+<!-- 마이페이지에 출력할 학생 데이터 조회 -->
+		
+<select id="selectStudentData" parameterType="loginVO" resultType="mypageVO">
+		
+		SELECT	 A.MS_ID				MS_ID
+				,A.MS_NAME				MS_NAME
+				,A.MS_NUM				MS_NUM
+				,A.MS_CP				MS_CP
+				,A.MS_ZIPCODE			MS_ZIPCODE
+				,A.MS_DORO				MS_DORO
+				,A.MS_INSDATE			MS_INSDATE
+				,A.MS_GRADE				MS_GRADE
+				,A.MS_CLASS				MS_CLASS
+				,A.MS_NUMBER			MS_NUMBER
+		FROM	KOSMOS_MEMSTU A
+		WHERE 	A.MS_DELYN = 'Y'
+		AND		A.MS_ID = #{ms_id, jdbcType=VARCHAR}
+		AND		A.MS_NUM = #{ms_num, jdbcType=VARCHAR}
+</select>
+		
+		
+<!-- 마이페이지에 출력할 교사 데이터 조회 -->
+	
+<select id="selectTeacherData" parameterType="loginVO" resultType="mypageVO">
+		
+		SELECT	 A.MT_ID				MT_ID
+				,A.MT_NAME				MT_NAME
+				,A.MT_NUM				MT_NUM
+				,A.MT_CP				MT_CP
+				,A.MT_ZIPCODE			MT_ZIPCODE
+				,A.MT_DORO				MT_DORO
+		FROM	KOSMOS_MEMTEA A
+		WHERE 	A.MT_DELYN = 'Y'
+		AND		A.MT_ID = #{mt_id, jdbcType=VARCHAR}
+		AND		A.MT_NUM = #{mt_num, jdbcType=VARCHAR}
+</select>
+
+
+
+<!-- 학생 정보 업데이트  -->
+<!-- 가입일 빼고 전체 데이터 업데이트 가능하도록. -->
+<update id="updateStudentInfo" parameterType="mypageVO">
+	UPDATE 	KOSMOS_MEMSTU 
+	SET 					  MS_ID = #{ms_id, jdbcType=VARCHAR}
+			  			  	, MS_NAME = #{ms_name, jdbcType=VARCHAR}
+						  	, MS_CP = #{ms_cp, jdbcType=VARCHAR}
+							, MS_ZIPCODE = #{ms_zipcode, jdbcType=VARCHAR}
+							, MS_DORO = #{ms_doro, jdbcType=VARCHAR}
+							, MS_GRADE = #{ms_grade, jdbcType=VARCHAR}
+							, MS_CLASS = #{ms_class, jdbcType=VARCHAR}
+							, MS_NUMBER = #{ms_number, jdbcType=VARCHAR}
+	WHERE 	MS_DELYN 		= 'Y' 
+	AND 	MS_ID 			= #{ms_id, jdbcType = VARCHAR}
+
+</update>
+
+
+<!-- 교사 정보 업데이트 -->
+<!-- 전체 데이터 업데이트 가능하도록. -->
+<update id="updateTeacherInfo" parameterType="mypageVO">
+	UPDATE 	KOSMOS_MEMTEA 
+	SET 					  MT_ID = #{mt_id, jdbcType=VARCHAR}
+			  			  	, MT_NAME = #{mt_name, jdbcType=VARCHAR}
+						  	, MT_CP = #{mt_cp, jdbcType=VARCHAR}
+							, MT_ZIPCODE = #{mt_zipcode, jdbcType=VARCHAR}
+							, MT_DORO = #{mt_doro, jdbcType=VARCHAR}
+							, MT_GRADE = #{mt_grade, jdbcType=VARCHAR}
+							, MT_CLASS = #{mt_class, jdbcType=VARCHAR}
+							, MT_NUMBER = #{mt_number, jdbcType=VARCHAR}
+	WHERE 	MT_DELYN 		= 'Y' 
+	AND 	MT_ID 			= #{mt_id, jdbcType = VARCHAR}
+
+</update>
+
+
+
+</mapper>

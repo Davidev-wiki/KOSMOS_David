@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+					"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+					
+<mapper namespace="com.kosmos.school.dao.KosmosSchoolDAO">
+<!-- 
+	테이블 생성
+	CREATE TABLE KOSMOS_OLDSUGANG (
+									     SL_NUM VARCHAR2(10)
+									    ,MS_NUM VARCHAR2(20)
+									    ,SB_GROUP VARCHAR2(3) 
+									    ,SB_NAME VARCHAR2(50) 
+									    ,SB_GRADE VARCHAR2(10) 		
+									    ,SB_CREDITUNIT VARCHAR2(1)
+									    ,SB_DAY VARCHAR2 (15)
+									    ,SB_TIMETABLE NUMBER(5) 
+									    ,SB_BEFOREYN VARCHAR2(1)    
+									    ,SB_BEFORENAME VARCHAR2(50) 
+									    ,SB_MAXSTU NUMBER(2) 
+									    ,SL_INSDATE DATE
+									    ,SL_UPDATE DATE
+									    ,SL_DELYN VARCHAR2 (1)
+									);
+
+	데이터 세팅 정보
+	
+	INSERT INTO KOSMOS_OLDSUGANG VALUES ('번호','202111260001','01','국어','1','3','월화수목', '62369','N','','30',SYSDATE,SYSDATE,'Y');
+	INSERT INTO KOSMOS_OLDSUGANG VALUES ('번호','202111260001','02','수학','1','3','월화수목', '91475','N','','30',SYSDATE,SYSDATE,'Y');
+	INSERT INTO KOSMOS_OLDSUGANG VALUES ('번호','202111260001','03','영어','1','3','월화수목', '59951','N','','30',SYSDATE,SYSDATE,'Y');
+	INSERT INTO KOSMOS_OLDSUGANG VALUES ('번호','202111260001','04','한국사','1','3','월화수목', '99539','N','','30',SYSDATE,SYSDATE,'Y');
+	INSERT INTO KOSMOS_OLDSUGANG VALUES ('번호','202111260001','05','통합사회','1','3','월화수목', '19294','N','','30',SYSDATE,SYSDATE,'Y');
+	INSERT INTO KOSMOS_OLDSUGANG VALUES ('번호','202111260001','06','통합과학','1','3','월화수목', '99929','N','','30',SYSDATE,SYSDATE,'Y');
+	INSERT INTO KOSMOS_OLDSUGANG VALUES ('번호','202111260001','06','과학탐구실험','1','3','월화수목', '45992','N','','30',SYSDATE,SYSDATE,'Y');
+	INSERT INTO KOSMOS_OLDSUGANG VALUES ('번호','202111260001','07','스포츠 생활','1','3','월화수목', '27949','N','','30',SYSDATE,SYSDATE,'Y');
+	INSERT INTO KOSMOS_OLDSUGANG VALUES ('번호','202111260001','08','음악','1','2','월화수목', '93199','N','','30',SYSDATE,SYSDATE,'Y');
+	INSERT INTO KOSMOS_OLDSUGANG VALUES ('번호','202111260001','09','한문1','1','2','월화수목', '99996','N','','30',SYSDATE,SYSDATE,'Y');
+	INSERT INTO KOSMOS_OLDSUGANG VALUES ('번호','202111260001','10','철학','1','2','월화수목', '94993','N','','30',SYSDATE,SYSDATE,'Y');
+	INSERT INTO KOSMOS_OLDSUGANG VALUES ('번호','202111260001','11','진로','1','2','월화수목', '36619','N','','30',SYSDATE,SYSDATE,'Y');
+
+ -->	
+
+
+	<!-- 1교시 -->
+	<!-- 빠진 부분 NULL값을 ' '로 바꿔주기 -->
+	<select id="timetable1" parameterType="SchoolVO" resultType="SchoolVO">
+		
+		SELECT      MS_NUM, 
+			NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG
+             WHERE SUBSTR(SB_TIMETABLE,1,1) LIKE '1' 
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS MON
+           ,NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG
+             WHERE SUBSTR(SB_TIMETABLE,2,1) LIKE '1' 
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS TUE
+           ,NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG
+             WHERE SUBSTR(SB_TIMETABLE,3,1) LIKE '1' 
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS WEN
+           ,NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG
+             WHERE SUBSTR(SB_TIMETABLE,4,1) LIKE '1' 
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS THU
+           ,NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG
+             WHERE SUBSTR(SB_TIMETABLE,5,1) LIKE '1' 
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS FRI
+		FROM        KOSMOS_OLDSUGANG
+		WHERE       ROWNUM=1
+	</select>
+	
+	<!-- 2교시 -->
+	<!-- 빠진 부분 NULL값을 ' '로 바꿔주기 -->
+	<select id="timetable2" parameterType="SchoolVO" resultType="SchoolVO">
+		
+		SELECT      
+			NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG
+             WHERE SUBSTR(SB_TIMETABLE,1,1) LIKE '2' 
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS MON   
+           ,NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG               
+             WHERE SUBSTR(SB_TIMETABLE,2,1) LIKE '2'                      
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS TUE   
+           ,NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG               
+             WHERE SUBSTR(SB_TIMETABLE,3,1) LIKE '2'                      
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS WEN  
+           ,NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG               
+             WHERE SUBSTR(SB_TIMETABLE,4,1) LIKE '2'                      
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS THU  
+           ,NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG               
+             WHERE SUBSTR(SB_TIMETABLE,5,1) LIKE '2'                      
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS FRI  
+		FROM        KOSMOS_OLDSUGANG
+		WHERE       ROWNUM=1 
+	</select>
+	
+	<!-- 3교시 -->
+	<!-- 빠진 부분 NULL값을 ' '로 바꿔주기 -->
+	<select id="timetable3" parameterType="SchoolVO" resultType="SchoolVO">
+		
+		SELECT      
+			NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG
+             WHERE SUBSTR(SB_TIMETABLE,1,1) LIKE '3' 
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS MON   
+           ,NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG               
+             WHERE SUBSTR(SB_TIMETABLE,2,1) LIKE '3'                      
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS TUE  
+           ,NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG               
+             WHERE SUBSTR(SB_TIMETABLE,3,1) LIKE '3'                      
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS WEN  
+           ,NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG               
+             WHERE SUBSTR(SB_TIMETABLE,4,1) LIKE '3'                      
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS THU  
+           ,NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG               
+             WHERE SUBSTR(SB_TIMETABLE,5,1) LIKE '3'                      
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS FRI  
+		FROM        KOSMOS_OLDSUGANG
+		WHERE       ROWNUM=1 
+	</select>
+	
+	<!-- 4교시 -->
+	<!-- 빠진 부분 NULL값을 ' '로 바꿔주기 -->
+	<select id="timetable4" parameterType="SchoolVO" resultType="SchoolVO">
+		
+		SELECT      
+			NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG
+             WHERE SUBSTR(SB_TIMETABLE,1,1) LIKE '4' 
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS MON   
+           ,NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG               
+             WHERE SUBSTR(SB_TIMETABLE,2,1) LIKE '4'                      
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS TUE   
+           ,NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG               
+             WHERE SUBSTR(SB_TIMETABLE,3,1) LIKE '4'                      
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS WEN  
+           ,NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG               
+             WHERE SUBSTR(SB_TIMETABLE,4,1) LIKE '4'                      
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS THU  
+           ,NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG               
+             WHERE SUBSTR(SB_TIMETABLE,5,1) LIKE '4'                      
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS FRI  
+		FROM        KOSMOS_OLDSUGANG
+		WHERE       ROWNUM=1 
+	</select>
+	
+	<!-- 5교시 -->
+	<!-- 빠진 부분 NULL값을 ' '로 바꿔주기 -->
+	<select id="timetable5" parameterType="SchoolVO" resultType="SchoolVO">
+		
+		SELECT      
+			NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG
+             WHERE SUBSTR(SB_TIMETABLE,1,1) LIKE '5' 
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS MON   
+           ,NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG               
+             WHERE SUBSTR(SB_TIMETABLE,2,1) LIKE '5'                      
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS TUE  
+           ,NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG               
+             WHERE SUBSTR(SB_TIMETABLE,3,1) LIKE '5'                      
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS WEN  
+           ,NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG               
+             WHERE SUBSTR(SB_TIMETABLE,4,1) LIKE '5'                      
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS THU  
+           ,NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG               
+             WHERE SUBSTR(SB_TIMETABLE,5,1) LIKE '5'                      
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS FRI  
+		FROM        KOSMOS_OLDSUGANG
+		WHERE       ROWNUM=1 
+	</select>
+	
+	<!-- 6교시 -->
+	<!-- 빠진 부분 NULL값을 ' '로 바꿔주기 -->
+	<select id="timetable6" parameterType="SchoolVO" resultType="SchoolVO">
+		
+		SELECT      
+			NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG
+             WHERE SUBSTR(SB_TIMETABLE,1,1) LIKE '6' 
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS MON   
+           ,NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG               
+             WHERE SUBSTR(SB_TIMETABLE,2,1) LIKE '6'                      
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS TUE   
+           ,NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG               
+             WHERE SUBSTR(SB_TIMETABLE,3,1) LIKE '6'                      
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS WEN  
+           ,NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG               
+             WHERE SUBSTR(SB_TIMETABLE,4,1) LIKE '6'                      
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS THU  
+           ,NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG               
+             WHERE SUBSTR(SB_TIMETABLE,5,1) LIKE '6'                      
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS FRI  
+		FROM        KOSMOS_OLDSUGANG
+		WHERE       ROWNUM=1
+	</select>
+	
+	<!-- 7교시 -->
+	<!-- 빠진 부분 NULL값을 ' '로 바꿔주기 -->
+	<select id="timetable7" parameterType="SchoolVO" resultType="SchoolVO">
+		
+		SELECT      
+			NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG
+             WHERE SUBSTR(SB_TIMETABLE,1,1) LIKE '7' 
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS MON   
+           ,NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG               
+             WHERE SUBSTR(SB_TIMETABLE,2,1) LIKE '7'                      
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS TUE   
+           ,NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG               
+             WHERE SUBSTR(SB_TIMETABLE,3,1) LIKE '7'                      
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS WEN  
+           ,NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG               
+             WHERE SUBSTR(SB_TIMETABLE,4,1) LIKE '7'                      
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS THU  
+           ,NVL((SELECT SB_NAME FROM KOSMOS_OLDSUGANG               
+             WHERE SUBSTR(SB_TIMETABLE,5,1) LIKE '7'                      
+             AND MS_NUM = #{ms_num, jdbcType=VARCHAR}), ' ') AS FRI  
+		FROM        KOSMOS_OLDSUGANG
+		WHERE       ROWNUM=1 
+	</select>
+</mapper>
